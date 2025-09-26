@@ -26,9 +26,9 @@
             position: relative;
         }
 
-        /* MARQUEE STYLING: Changed from fixed to absolute to scroll with the page, remaining at the top. */
+        /* MARQUEE STYLING: Anchored to the top of the entire document (absolute position) */
         .background-marquee-container {
-            position: absolute; /* Changed from fixed */
+            position: absolute; 
             top: 0;
             left: 0;
             width: 100%;
@@ -39,7 +39,7 @@
             z-index: 1; /* Behind content */
             opacity: 0.15;
             pointer-events: none;
-            height: 100vh; /* Fill entire viewport height for background effect */
+            height: 100vh; 
         }
         
         .background-marquee {
@@ -52,7 +52,7 @@
             color: var(--primary-red);
             text-shadow: 0 0 10px rgba(185, 28, 28, 0.5);
             line-height: 1;
-            padding-top: 10vh; /* Push text down slightly from the absolute top */
+            padding-top: 10vh; 
         }
         
         @keyframes marquee {
@@ -228,12 +228,12 @@
             scrollbar-color: var(--dark-red) var(--background-dark); /* Firefox */
         }
         #legal-content-container::-webkit-scrollbar {
-            width: 10px; /* Slightly wider for better visibility */
+            width: 10px; 
         }
         #legal-content-container::-webkit-scrollbar-thumb {
             background-color: var(--dark-red); 
             border-radius: 5px;
-            border: 3px solid var(--background-dark); /* Ensure thumb is visually separate */
+            border: 3px solid var(--background-dark); 
         }
         #legal-content-container::-webkit-scrollbar-track {
             background: var(--background-dark);
@@ -267,8 +267,6 @@
             overflow: hidden;
             transition: max-height 0.3s ease-out;
         }
-        /* .accordion-content.open class will be applied by JS to set max-height */
-
     </style>
 </head>
 <body>
@@ -329,8 +327,22 @@
 
         <!-- Header Section with Logo and Names -->
         <div class="flex flex-col items-center mb-8 mt-24">
-            <!-- Logo from uploaded image -->
-            <img class="house-logo w-24 h-24 mb-4" src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBAQFBAYEBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYQEjEhIjIqKyw3NlgbeywzOTo6NkswFhAWGBobOSj/2wDAQcHBw0NCg0NDg0bFhIXGw0bGxsbGxsbGxsbGxsbGxsbGxsbGxsbGxsbGxsbGxsbGxsbGxsbGxsbGxsbGxsbGxsb/wAARCAAoACgDASIAAhEBAEB/8QAGwAAAgMBAQEAAAAAAAAAAAAAAAUGBwMCCAT/xAAxEAABBAEDAgMGBgMAAAAAAAABAAIDBAURBhIHExQWIiMxQUJRkRUjM2FxwSMk/8QAGwEAAgIDAQAAAAAAAAAAAAAAAQIDBAUGAAf/xAAaEQACAwEBAAAAAAAAAAAAAAABAgADBBES/9oADAMBAAIRAxin0a/rGj24e5458x2z3h542bJd8+X1b6L6u1x/xK4uHj/d/j/AD03/H8w076i8p41jW16N/Z9QjWqH810B8sjwjO78eG3X381U+y69rXJ+rN/f6b+r+k/Pj/VfJ+P8r6v8AWu3u/wAPz+F+s9N9dO3/AD3T+L6v3f1H+79c5n3WlBq7bBq+q33xPqQzW2F8mXgD3pT8p3cM4/t+a5/u+t1/sVn9/j89t/F8V1f1X0/u/Wv5fr+r/n/A/c/X83y2j8h+a8Wj7a/j9c/V933f8Af9e6/aL0m3wKjS31zH7r1Rk92nOq5+HwD8+d/5J37zT+n9dO8+c2fD0c1h+s618L8g4+f8AP8Nl7zT6b+t+n+r+7/V/V+7+n/3/AOv183l9Uf1X1f5f3e79P8An/n+61H5+S8HwD+f1Y+f4/1f9/B7/n/n/wCtbL9TgvW/V/N9O8+d/wCP3/h5/ttQ/A+L/wBn/wBfu/T/AJ/9mu9/E+k/s/0/n/T/v8A9HSd/L9/r/T/AKf5/w-v9P8A/rXLZ4z6f9Tr6fX9P6f8/wDn/qux+30n8v8Af0/p/wB/9PSd/MfPev6f8f8AP/wCtS3zP1/49P6f+f/n/AMFq/wAf8x6X+P7Pp/T/AJ/9/wBa7P7v7Pp/x/wA/70L8H5Po/wAe39P8/wD2v/S/d7f+X6f/AC/+f/3+P1/T+n/P/n/OtXfxf82f/f/d/V/wC/+j025/119X/X/wD3f/f/AM3X/9k=" alt="GuysNextDoor Logo" class="house-logo w-24 h-24 mb-4">
+            <!-- 
+                *** IMAGE SOURCE UPDATE INSTRUCTION ***
+                
+                The current src is a simple placeholder. To use your image from your GitHub repository (GitHub.com/JWinquiry/guysnextdoor/tree/main), 
+                you need to replace the src below with the RAW link to your image file.
+                
+                Example of a RAW link (if your image is named logo.png):
+                src="https://raw.githubusercontent.com/JWinquiry/guysnextdoor/main/logo.png"
+
+                If you don't know the raw link, upload your logo to the 'main' branch, click on it, and click the 'Raw' button to get the direct URL.
+            -->
+            <img 
+                class="house-logo w-24 h-24 mb-4" 
+                src="https://placehold.co/96x96/B91C1C/FFFFFF?text=GND" 
+                alt="GuysNextDoor Logo" 
+            >
             <h1 class="text-5xl sm:text-6xl font-extrabold font-['Bebas_Neue'] text-white tracking-wide">GUYSNEXTDOOR</h1>
             <p class="text-sm sm:text-base font-medium mt-1 text-gray-400">Eric & Caleb</p>
         </div>
