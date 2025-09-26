@@ -4,6 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GuysNextDoor</title>
+    
+    <!-- Favicon Links using your GitHub Logo -->
+    <link rel="icon" type="image/jpeg" href="https://raw.githubusercontent.com/JWinquiry/guysnextdoor/main/High%20Quality%20Logo.jpeg">
+    <!-- Optional: Used for iOS/iPad home screens -->
+    <link rel="apple-touch-icon" href="https://raw.githubusercontent.com/JWinquiry/guysnextdoor/main/High%20Quality%20Logo.jpeg">
+    
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Font Awesome is used in the original file -->
     <script src="https://kit.fontawesome.com/a1d5a42823.js" crossorigin="anonymous"></script>
@@ -108,6 +114,8 @@
         .house-logo {
             filter: drop-shadow(0 0 5px rgba(185, 28, 28, 0.5));
             transition: transform 0.3s ease;
+            /* Added margin-bottom to separate it slightly from the title */
+            margin-bottom: 1rem;
         }
 
         .house-logo:hover {
@@ -328,19 +336,11 @@
         <!-- Header Section with Logo and Names -->
         <div class="flex flex-col items-center mb-8 mt-24">
             <!-- 
-                *** IMAGE SOURCE UPDATE INSTRUCTION ***
-                
-                The current src is a simple placeholder. To use your image from your GitHub repository (GitHub.com/JWinquiry/guysnextdoor/tree/main), 
-                you need to replace the src below with the RAW link to your image file.
-                
-                Example of a RAW link (if your image is named logo.png):
-                src="https://raw.githubusercontent.com/JWinquiry/guysnextdoor/main/logo.png"
-
-                If you don't know the raw link, upload your logo to the 'main' branch, click on it, and click the 'Raw' button to get the direct URL.
+                Image has been updated with the 'rounded-full' class for a circular look.
             -->
             <img 
-                class="house-logo w-24 h-24 mb-4" 
-                src="https://raw.githubusercontent.com/JWinquiry/guysnextdoor/main/High%20Quality%20Logo.jpeg
+                class="house-logo w-28 h-28 mb-4 rounded-full object-cover border-4 border-red-600/50" 
+                src="https://raw.githubusercontent.com/JWinquiry/guysnextdoor/main/High%20Quality%20Logo.jpeg" 
                 alt="GuysNextDoor Logo" 
             >
             <h1 class="text-5xl sm:text-6xl font-extrabold font-['Bebas_Neue'] text-white tracking-wide">GUYSNEXTDOOR</h1>
