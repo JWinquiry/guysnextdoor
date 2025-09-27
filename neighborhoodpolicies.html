@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neighborhood Policies - GuysNextDoor</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* --- Aesthetic Consistency & Forced Dark Mode --- */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap');
+        
+        /* Define Dark Mode Variables, consistent with the main site index.html */
+        :root, html.dark {
+            --bg-color: #121212; /* Primary Black Background */
+            --text-color: #e0e0e0; /* Light Text */
+            --card-bg: #1f1f1f; /* Darker Card Background */
+            --border-color: #374151; /* Subtle Dark Border */
+            --primary-color: #fb923c; /* Brighter Orange/Amber (Used for non-title accents/tabs) */
+            --secondary-color: #5eead4; /* Brighter Teal/Cyan (Not used for main accents in this version) */
+            --danger-color: #ef4444; /* Vivid Red (Used for Titles and Delete Button, as requested) */
+            --input-bg: #2c2c2c; /* Input Background */
+            --input-border: #4b5563; /* Input Border */
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color); 
+            color: var(--text-color);
+        }
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -2px rgba(0, 0, 0, 0.2);
+        }
+        .input-style {
+            background-color: var(--input-bg);
+            border-color: var(--input-border);
+            color: var(--text-color);
+        }
+        
+        /* --- Background Scrolling Text Animation: FASTER and HIGHER --- */
+        @keyframes scroll-left {
+            from { transform: translate3d(0, 0, 0); } 
+            to { transform: translate3d(-50%, 0, 0); }
+        }
+        .scrolling-text-container {
+            position: fixed;
+            top: 0; 
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+            z-index: 0; 
+        }
+        .scrolling-text {
+            position: absolute;
+            width: 200%; 
+            top: 0; 
+            font-size: 6rem;
+            font-weight: 900;
+            opacity: 0.08; 
+            color: var(--primary-color);
+            white-space: nowrap;
+            animation: scroll-left 60s linear infinite; 
+        }
+        @media (min-width: 768px) {
+            .scrolling-text {
+                font-size: 10rem;
+                opacity: 0.05;
+            }
+        }
+        
+        /* --- Sticky Tabs Style --- */
+        /* This makes the bar scroll with the page, then stick to the top: 0px when it reaches it */
+        .sticky-tabs {
+            position: sticky;
+            top: 0px; 
+            z-index: 30; 
+            /* Tailwind classes below handle the transparency/blur/border */
+        }
+
+        /* --- Collapsible and Tab Styles --- */
+        .collapsible-header {
+            cursor: pointer;
+            user-select: none;
+            transition: background-color 0.2s;
+        }
+        .collapsible-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-in-out, padding 0.4s ease-in-out;
+            opacity: 0;
+            padding-top: 0;
+            padding-bottom: 0;
+        }
+        .collapsible-content.expanded {
+            max-height: 2000px; /* Generous height for expansion */
+            opacity: 1;
+            padding-top: 1rem;
+            padding-bottom: 1.5rem;
+            padding-left: 1.5rem;
+            padding-right: 1.5rem;
+        }
+        .rotate-90 {
+            transform: rotate(90deg);
+            transition: transform 0.2s;
+        }
+
+        /* --- Custom Content Styles for Clean Readability --- */
+        .policy-list > li {
+            margin-bottom: 0.5rem;
+            list-style-type: disc;
+        }
+        .policy-list {
+            padding-left: 1.5rem;
+        }
+        .policy-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+            text-align: left;
+            font-size: 0.95rem;
+        }
+        .policy-table th, .policy-table td {
+            padding: 0.6rem 0.75rem;
+            border: 1px solid var(--border-color);
+        }
+        .policy-table th {
+            /* Using a hardcoded color slightly darker than card-bg for contrast */
+            background-color: #2c2c2c; 
+            color: var(--primary-color);
+        }
+    </style>
+</head>
+<body class="bg-[var(--bg-color)]">
+
+    <!-- --- Scrolling Background Text --- -->
+    <div class="scrolling-text-container">
+        <div class="scrolling-text">
+            GUYS NEXT DOOR NEIGHBORHOOD POLICIES AGE 18+ RULES COPYRIGHT 
+        </div>
+    </div>
+
+    <!-- --- Main Content Container (z-index 10 to sit above background) --- -->
+    <div class="relative z-10 max-w-4xl mx-auto pb-8 px-4 md:pb-12 md:px-6">
+        
+        <!-- Non-Intrusive Home Link (Now left-justified and above the header card) -->
+        <div class="pt-8 mb-4">
+            <a href="index.html" class="text-sm text-gray-500 hover:text-primary-color transition duration-150 flex items-center z-30">
+                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                Back to Home
+            </a>
+        </div>
+
+        <!-- Header Card Element -->
+        <header class="text-center mb-10">
+            <div class="card p-8 rounded-xl">
+                <!-- PRIMARY TITLE: VIVID RED -->
+                <h1 class="text-5xl font-extrabold text-[var(--danger-color)] tracking-tight">
+                    Neighborhood Policies
+                </h1>
+                <p class="text-xl mt-3 text-gray-400">Official Standards for the GuysNextDoor Community</p>
+                <p class="text-sm mt-2 text-gray-500">Last Updated: September 26, 2025</p>
+            </div>
+        </header>
+
+        <!-- --- Sticky Tabs Bar (In document flow, sticks at top when scrolling) --- -->
+        <div class="sticky-tabs bg-[var(--bg-color)]/80 backdrop-blur-sm border-b border-[var(--border-color)] mx-auto max-w-4xl px-4 md:px-6 -mx-4 md:-mx-6">
+            <!-- Tabs for ToS and Privacy Policy. Active tab color changed to danger-color (Vivid Red) -->
+            <div class="flex space-x-4 pt-0 pb-0 mb-0">
+                <button id="tab-tos-btn" onclick="showLegalTab('tos')" class="tab-button px-4 py-3 font-semibold text-lg border-b-2 border-[var(--danger-color)] text-[var(--danger-color)] transition duration-200">
+                    Terms of Service
+                </button>
+                <button id="tab-policy-btn" onclick="showLegalTab('policy')" class="tab-button px-4 py-3 font-semibold text-lg border-b-2 border-transparent text-gray-400 hover:text-[var(--primary-color)] transition duration-200">
+                    Privacy Policy
+                </button>
+            </div>
+        </div>
+
+        <!-- Content Area (Starts immediately after the tabs) -->
+        <div id="content-area" class="space-y-6 mt-6">
+
+            <!-- Terms of Service Content -->
+            <div id="content-tos" class="tab-content space-y-4">
+                <!-- Content will be rendered here by JS -->
+            </div>
+
+            <!-- Privacy Policy Content -->
+            <div id="content-policy" class="tab-content space-y-4 hidden">
+                <!-- Content will be rendered here by JS -->
+            </div>
+            
+            <!-- --- Legal FAQ --- -->
+            <section class="mt-12 pt-8 border-t border-[var(--border-color)]">
+                <!-- FAQ SECTION HEADER: VIVID RED -->
+                <h2 class="text-3xl font-bold mb-6 flex items-center text-[var(--danger-color)]">
+                    <svg class="w-7 h-7 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9.247a1 1 0 01.799-.548l2.972.424a1 1 0 01.815.753l.366 1.83a1 1 0 01-.137.753l-1.4 1.4a1 1 0 01-1.414 0l-1.4-1.4a1 1 0 01-.137-.753l.366-1.83a1 1 0 01.815-.753l2.972-.424a1 1 0 01.799.548zM12 21a9 9 0 100-18 9 9 0 000 18z"></path></svg>
+                    Legal FAQ (Quick Answers for Everyone)
+                </h2>
+                
+                <div id="faq-container" class="space-y-4">
+                    <!-- FAQ 1 -->
+                    <div class="card p-0 rounded-xl">
+                        <button onclick="toggleCollapsible('faq-1')" class="collapsible-header w-full text-left p-4 rounded-xl flex justify-between items-center text-lg font-semibold hover:bg-[var(--card-bg)]/50 transition">
+                            <span>❓ What is "Vibe" and how is it calculated?</span>
+                            <span class="transform transition duration-200">▶</span>
+                        </button>
+                        <div id="faq-1" class="collapsible-content">
+                            <p class="text-gray-400">Vibe is the <strong>XP (Experience Points)</strong> used for our <strong>Neighborhood Rank</strong> system. It is calculated by our custom bot, Housemate Ryker, based purely on your non-spam activity in the Discord server. It's used <strong>only</strong> for community engagement and ranks (like 'Block Captain').</p>
+                        </div>
+                    </div>
+                    
+                    <!-- FAQ 2 -->
+                    <div class="card p-0 rounded-xl">
+                        <button onclick="toggleCollapsible('faq-2')" class="collapsible-header w-full text-left p-4 rounded-xl flex justify-between items-center text-lg font-semibold hover:bg-[var(--card-bg)]/50 transition">
+                            <span>🚫 Why do I need to be 18+ for a Discord server?</span>
+                            <span class="transform transition duration-200">▶</span>
+                        </button>
+                        <div id="faq-2" class="collapsible-content">
+                            <p class="text-gray-400">All our platforms (including the Discord) are directly associated with our <strong>adult-oriented live stream content</strong>. To comply with regulations and protect our platform integrity, we require all users to be legally 18 or older to access any associated community space.</p>
+                        </div>
+                    </div>
+
+                    <!-- FAQ 3 -->
+                    <div class="card p-0 rounded-xl">
+                        <button onclick="toggleCollapsible('faq-3')" class="collapsible-header w-full text-left p-4 rounded-xl flex justify-between items-center text-lg font-semibold hover:bg-[var(--card-bg)]/50 transition">
+                            <span>🛡️ What data does the bot (Housemate Ryker) collect?</span>
+                            <span class="transform transition duration-200">▶</span>
+                        </button>
+                        <div id="faq-3" class="collapsible-content">
+                            <p class="text-gray-400">Housemate Ryker collects <strong>three pieces of non-personal data</strong>: your <strong>Discord User ID</strong> (a long number, not your name), your <strong>Vibe Points</strong>, and the <strong>timestamp of your last message</strong>. This data is used only for the rank system and is <strong>never sold or shared</strong> outside the team.</p>
+                        </div>
+                    </div>
+
+                    <!-- FAQ 4 -->
+                    <div class="card p-0 rounded-xl">
+                        <button onclick="toggleCollapsible('faq-4')" class="collapsible-header w-full text-left p-4 rounded-xl flex justify-between items-center text-lg font-semibold hover:bg-[var(--card-bg)]/50 transition">
+                            <span>🎥 Can I use stream clips or post your content elsewhere?</span>
+                            <span class="transform transition duration-200">▶</span>
+                        </button>
+                        <div id="faq-4" class="collapsible-content">
+                            <p class="text-gray-400"><strong>No.</strong> All content (streams, photos, videos) is <strong>copyrighted property</strong> of Eric & Caleb. Recording, screen-capturing, downloading, or sharing any portion of our content is strictly prohibited and results in an immediate, permanent ban.</p>
+                        </div>
+                    </div>
+
+                    <!-- FAQ 5 -->
+                    <div class="card p-0 rounded-xl">
+                        <button onclick="toggleCollapsible('faq-5')" class="collapsible-header w-full text-left p-4 rounded-xl flex justify-between items-center text-lg font-semibold hover:bg-[var(--card-bg)]/50 transition">
+                            <span>📧 How do I report a serious issue or submit a ban appeal?</span>
+                            <span class="transform transition duration-200">▶</span>
+                        </button>
+                        <div id="faq-5" class="collapsible-content">
+                            <p class="text-gray-400">For privacy and safety, all serious reports (harassment, illegal content) or ban appeals must be submitted <strong>privately</strong> through the Contact form on our main page (or use the Data Deletion form below for technical requests). Do not discuss appeals publicly.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- --- Data Deletion Request Form --- -->
+            <section class="mt-12 pt-8 border-t border-[var(--border-color)]">
+                <!-- DELETION SECTION HEADER: VIVID RED -->
+                <h2 class="text-3xl font-bold mb-6 flex items-center text-[var(--danger-color)]">
+                    <svg class="w-7 h-7 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                    Data Deletion Request (Right to Removal)
+                </h2>
+                <div class="card p-6 rounded-xl space-y-4">
+                    <p class="text-gray-400">Use this form to request the permanent deletion of your <strong>Vibe data</strong> (tied to your Discord ID) or past <strong>Contact Form submissions</strong>.</p>
+                    
+                    <form id="deletion-form" name="data-deletion" method="POST" data-netlify="true">
+                        <input type="hidden" name="form-name" value="data-deletion">
+        
+                        <div class="mb-4">
+                            <label for="del-email" class="block text-sm font-medium mb-1 text-gray-300">Email for Confirmation</label>
+                            <input type="email" id="del-email" name="email" required placeholder="The email we can reach you at"
+                                class="w-full p-3 rounded-lg focus:ring-[var(--primary-color)] focus:border-[var(--primary-color)] outline-none input-style">
+                        </div>
+                        <div class="mb-4">
+                            <label for="del-id" class="block text-sm font-medium mb-1 text-gray-300">Discord User ID (Required for Bot Data)</label>
+                            <input type="text" id="del-id" name="discord-user-id" placeholder="e.g., 123456789012345678"
+                                class="w-full p-3 rounded-lg focus:ring-[var(--primary-color)] focus:border-[var(--primary-color)] outline-none input-style">
+                            <p class="text-xs mt-1 text-gray-500">Find this by enabling Developer Mode in Discord settings and right-clicking your name.</p>
+                        </div>
+                        <div class="mb-4">
+                            <label for="del-request" class="block text-sm font-medium mb-1 text-gray-300">Deletion Request Details</label>
+                            <textarea id="del-request" name="request-details" rows="3" required placeholder="Specify what you want deleted (e.g., 'All Vibe data' or 'My previous contact form entries')"
+                                class="w-full p-3 rounded-lg focus:ring-[var(--primary-color)] focus:border-[var(--primary-color)] outline-none input-style"></textarea>
+                        </div>
+                        <!-- Button color is the vivid red danger color -->
+                        <button type="submit" id="del-submit-btn"
+                            class="w-full bg-[var(--danger-color)] text-white py-3 rounded-lg font-bold text-lg hover:bg-[var(--danger-color)]/90 transition duration-200 shadow-md">
+                            Submit Deletion Request
+                        </button>
+                    </form>
+                    <div id="deletion-success" class="hidden mt-4 p-4 text-sm text-green-200 bg-green-700 rounded-lg font-medium">
+                        ✅ Request submitted! We will contact you at the provided email shortly.
+                    </div>
+                </div>
+            </section>
+            
+        </div>
+        
+    </div>
+    
+    <script>
+        // --- Legal Content (Markdown removed, using <strong> and <em>) ---
+        
+        const legalTOSContent = [
+            {
+                title: '1. Mandatory Rule: You Must Be 18+',
+                icon: '🔞',
+                content: `
+                    <p>This is the most important rule. <strong>All users of GND Platforms must be 18 years of age or older.</strong></p>
+                    <ul class="policy-list">
+                        <li><strong>Age Confirmation:</strong> By continuing to use our services, you confirm that you meet this age requirement.</li>
+                        <li><strong>Violations:</strong> If you are found to be underage, your access will be immediately and permanently revoked.</li>
+                    </ul>
+                `
+            },
+            {
+                title: '2. Protecting Our Content (Copyright)',
+                icon: '📸',
+                content: `
+                    <p><strong>Everything Eric & Caleb create is our protected property.</strong> This includes all videos, streams, photos, and creative work (GND Content).</p>
+                    <ul class="policy-list">
+                        <li><strong>No Sharing or Copying:</strong> You are <strong>strictly prohibited</strong> from downloading, screen-capturing, recording, selling, or sharing <strong>any part of the GND Content</strong> without written permission.</li>
+                        <li><strong>Consequences:</strong> Unauthorized sharing is a violation of this agreement and will lead to an <strong>immediate, permanent ban.</strong></li>
+                    </ul>
+                `
+            },
+            {
+                title: '3. Good Neighborhood Conduct',
+                icon: '🏘️',
+                content: `
+                    <p>We expect everyone to contribute positively to the community environment.</p>
+                    <ul class="policy-list">
+                        <li><strong>Be Respectful:</strong> No targeted harassment, bullying, hate speech, or discrimination against anyone.</li>
+                        <li><strong>Owners Have Final Say:</strong> Eric and Caleb (and our designated staff) have the <strong>final word</strong> on rule enforcement and disciplinary actions (warnings, mutes, or bans).</li>
+                    </ul>
+                `
+            },
+            {
+                title: '4. Legal Protection (Disclaimer)',
+                icon: '🛡️',
+                content: `
+                    <p><strong>We are not responsible for user actions or technical issues.</strong></p>
+                    <ul class="policy-list">
+                        <li><strong>"AS IS" Service:</strong> The platforms are provided exactly "as is," without guarantees that they will always be perfect or error-free.</li>
+                        <li><strong>Limited Liability:</strong> You use these platforms at your own risk. We are <strong>not responsible</strong> for any content posted by other users or for any damages resulting from your use of or inability to use the platforms.</li>
+                    </ul>
+                `
+            }
+        ];
+        
+        const legalPolicyContent = [
+            {
+                title: '1. What We Collect (Minimum Data)',
+                icon: '⚙️',
+                content: `
+                    <p>We only collect data necessary to run the community and reward activity (Vibe/Rank system).</p>
+                    <table class="policy-table">
+                        <thead>
+                            <tr>
+                                <th>Where it's Collected</th>
+                                <th>What We Collect</th>
+                                <th>Why We Collect It</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Discord Server (Housemate Ryker Bot)</strong></td>
+                                <td><strong>Discord User ID</strong> and <strong>Vibe (XP) Points</strong></td>
+                                <td>To identify you for the rank system (\`!rank\`) and ensure community stability.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Website & Streams</strong></td>
+                                <td><strong>Anonymized Usage Logs</strong></td>
+                                <td>Standard, temporary logs (up to 30 days) used only for security and debugging.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Contact Form</strong></td>
+                                <td><strong>Name and Email</strong></td>
+                                <td>Used solely to reply to your message.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                `
+            },
+            {
+                title: '2. Our Promise: What We DON\'T Do',
+                icon: '✅',
+                content: `
+                    <p><strong>Your anonymity and trust are paramount.</strong></p>
+                    <ul class="policy-list">
+                        <li>We <strong>DO NOT sell, share, or transfer</strong> your User ID, Vibe data, or contact information to any external companies, advertisers, or third parties.</li>
+                        <li>We <strong>DO NOT use tracking cookies</strong> on our website.</li>
+                        <li>We only use your data <strong>internally</strong> to run and secure the Neighborhood.</li>
+                    </ul>
+                `
+            },
+            {
+                title: '3. Your Control: Data Removal',
+                icon: '🗑️',
+                content: `
+                    <p>You have the power to request that your information be deleted at any time.</p>
+                    <ul class="policy-list">
+                        <li><strong>Contact Data:</strong> If you use the contact form, you can request that we immediately delete your name and email history.</li>
+                        <li><strong>Discord Bot Data:</strong> If you leave the server, your Vibe and User ID data will be marked for eventual deletion. You can request <strong>immediate and permanent deletion</strong> by using the form below or messaging an administrator directly.</li>
+                    </ul>
+                `
+            }
+        ];
+
+        // --- Core Functions ---
+        
+        // Render content into the tab container using pure HTML strings
+        function renderContent(containerId, contentArray) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = ''; // Clear previous content
+
+            contentArray.forEach((item, index) => {
+                const element = document.createElement('div');
+                element.className = 'card p-0 rounded-xl';
+                element.innerHTML = `
+                    <button onclick="toggleCollapsible('${containerId}-${index}')" class="collapsible-header w-full text-left p-4 rounded-xl flex justify-between items-center text-lg font-semibold hover:bg-[var(--card-bg)]/50 transition">
+                        <span>${item.icon} ${item.title}</span>
+                        <span class="transform transition duration-200">▶</span>
+                    </button>
+                    <div id="${containerId}-${index}" class="collapsible-content text-gray-400">
+                        ${item.content}
+                    </div>
+                `;
+                container.appendChild(element);
+            });
+        }
+
+        // Toggle collapsible sections
+        function toggleCollapsible(contentId) {
+            const content = document.getElementById(contentId);
+            const header = content.previousElementSibling;
+            const icon = header.querySelector('span.transform');
+            
+            // Check if the content is currently expanded
+            const isExpanded = content.classList.contains('expanded');
+            
+            // Close all others (optional but keeps UI clean)
+            document.querySelectorAll('.collapsible-content.expanded').forEach(otherContent => {
+                if (otherContent !== content) {
+                    otherContent.classList.remove('expanded');
+                    otherContent.previousElementSibling.querySelector('span.transform').classList.remove('rotate-90');
+                }
+            });
+
+            // Toggle the current one
+            if (!isExpanded) {
+                content.classList.add('expanded');
+                icon.classList.add('rotate-90');
+            } else {
+                content.classList.remove('expanded');
+                icon.classList.remove('rotate-90');
+            }
+        }
+
+        // Tab switching logic (FIXED: Color variable and class manipulation updated)
+        function showLegalTab(tab) {
+            const tabs = ['tos', 'policy'];
+            
+            // Define active/inactive classes
+            const activeColorClasses = ['border-[var(--danger-color)]', 'text-[var(--danger-color)]'];
+            const inactiveColorClasses = ['border-transparent', 'text-gray-400', 'hover:text-[var(--primary-color)]'];
+
+            tabs.forEach(t => {
+                const contentEl = document.getElementById(`content-${t}`);
+                const tabBtn = document.getElementById(`tab-${t}-btn`);
+
+                // Hide all content tabs
+                contentEl.classList.add('hidden');
+
+                // Remove active classes (red) and apply inactive classes (gray/hover orange) to button
+                tabBtn.classList.remove(...activeColorClasses);
+                tabBtn.classList.add(...inactiveColorClasses);
+            });
+
+            // Show the selected tab content
+            document.getElementById(`content-${tab}`).classList.remove('hidden');
+            
+            // Set the selected tab button to active
+            const selectedTabBtn = document.getElementById(`tab-${tab}-btn`);
+            selectedTabBtn.classList.remove(...inactiveColorClasses); // Remove inactive state
+            selectedTabBtn.classList.add(...activeColorClasses); // Apply active state (Vivid Red)
+        }
+
+        // --- Form Handling (Netlify Compatible) ---
+        const deletionForm = document.getElementById('deletion-form');
+        const successMessage = document.getElementById('deletion-success');
+
+        deletionForm.addEventListener('submit', function(e) {
+            e.preventDefault(); 
+            const form = e.target;
+            const formData = new FormData(form);
+            const submitBtn = document.getElementById('del-submit-btn');
+            
+            submitBtn.textContent = 'Sending...';
+            submitBtn.disabled = true;
+            submitBtn.classList.add('opacity-50');
+
+            // Netlify form submission via fetch
+            fetch(form.action, {
+                method: 'POST',
+                body: formData
+            }).then(() => {
+                submitBtn.textContent = 'Request Sent!';
+                successMessage.classList.remove('hidden');
+                form.reset();
+                
+                // Reset button state after a delay
+                setTimeout(() => {
+                    submitBtn.disabled = false;
+                    submitBtn.classList.remove('opacity-50');
+                    submitBtn.textContent = 'Submit Deletion Request';
+                }, 5000);
+            }).catch(error => {
+                console.error('Form submission error:', error);
+                submitBtn.textContent = 'Error! Try Again.';
+                submitBtn.disabled = false;
+                submitBtn.classList.remove('opacity-50');
+            });
+        });
+
+        // --- Initialization ---
+        window.onload = function() {
+            // Render all content on load
+            renderContent('content-tos', legalTOSContent);
+            renderContent('content-policy', legalPolicyContent);
+            
+            // Default to showing TOS tab (Ensures correct initial state)
+            showLegalTab('tos');
+        };
+    </script>
+</body>
+</html>
