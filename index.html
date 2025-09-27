@@ -61,6 +61,7 @@
             top: 0;
             left: 0;
             width: 100%;
+            height: 100vh;
             display: flex;
             align-items: flex-start;
             justify-content: center;
@@ -68,7 +69,6 @@
             z-index: 1; /* Behind content */
             opacity: 0.15;
             pointer-events: none;
-            height: 100vh; 
         }
         
         .background-marquee {
@@ -165,7 +165,7 @@
             color: inherit;
         }
     
-        /* --- Modal styles (Contact, Legal, Age Gate) --- */
+        /* --- Modal styles (Contact, Age Gate) --- */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -225,50 +225,6 @@
             text-align: center;
         }
 
-        /* Legal Modal Specific Styling */
-        .legal-doc h3 {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-top: 1.5rem;
-            margin-bottom: 0.5rem;
-            color: var(--primary-red);
-            font-family: 'Bebas Neue', sans-serif;
-            letter-spacing: 0.05em;
-        }
-        .legal-doc h4 {
-            font-size: 1.125rem;
-            font-weight: 600;
-            margin-top: 1rem;
-            margin-bottom: 0.4rem;
-            color: var(--text-light);
-        }
-        .legal-doc p, .legal-doc li {
-            font-size: 0.95rem;
-            line-height: 1.6;
-            margin-bottom: 0.75rem;
-            color: #ccc;
-        }
-        .legal-doc ul {
-            list-style-type: disc;
-            margin-left: 1.5rem;
-        }
-
-        /* CUSTOM SCROLLBAR STYLES for Legal Doc Container */
-        #legal-content-container {
-            scrollbar-width: thin; /* Firefox */
-            scrollbar-color: var(--dark-red) var(--background-dark); /* Firefox */
-        }
-        #legal-content-container::-webkit-scrollbar {
-            width: 10px; 
-        }
-        #legal-content-container::-webkit-scrollbar-thumb {
-            background-color: var(--dark-red); 
-            border-radius: 5px;
-            border: 3px solid var(--background-dark); 
-        }
-        #legal-content-container::-webkit-scrollbar-track {
-            background: var(--background-dark);
-        }
 
         /* Accordion styles (FAQ Collapsible) */
         .accordion-item {
@@ -302,7 +258,7 @@
 </head>
 <body>
     
-    <!-- Load Marked.js for Markdown rendering (for legal docs) -->
+    <!-- Load Marked.js for Markdown rendering (No longer needed, but kept as a habit for future docs) -->
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 
     <!-- TOP BACKGROUND MARQUEE -->
@@ -328,29 +284,7 @@
         </div>
     </div>
 
-    <!-- LEGAL DOCUMENTATION MODAL (On-Screen Pop-up) -->
-    <div id="legal-modal" class="modal-overlay" onclick="handleModalClick(event, 'legal-modal')">
-        <div class="modal-content max-w-3xl">
-            <span class="modal-close" onclick="closeModal('legal-modal')">&times;</span>
-            
-            <h2 class="text-3xl font-bold mb-4 font-['Bebas_Neue'] tracking-wide text-red-600">Legal & Compliance</h2>
-
-            <!-- Tabs Styled to match the red theme -->
-            <div class="border-b border-gray-700 mb-6 flex space-x-4">
-                <button id="tab-policy" onclick="showLegalContent('policy')" class="py-2 px-0 text-sm font-semibold border-b-2 transition duration-150 focus:outline-none text-gray-400 hover:text-red-500 border-transparent">
-                    Privacy Policy
-                </button>
-                <button id="tab-tos" onclick="showLegalContent('tos')" class="py-2 px-0 text-sm font-semibold border-b-2 transition duration-150 focus:outline-none text-gray-400 hover:text-red-500 border-transparent">
-                    Terms of Service
-                </button>
-            </div>
-
-            <!-- Content Container - Increased padding-right (pr-4) to prevent text overlap with scrollbar -->
-            <div id="legal-content-container" class="legal-doc pr-4 overflow-y-auto" style="max-height: 70vh;">
-                <!-- Content will be rendered here by JavaScript -->
-            </div>
-        </div>
-    </div>
+    <!-- NOTE: Removed the Legal Modal section as requested. -->
 
 
     <!-- Main Content Area (Hidden or block-interaction class added until verified) -->
@@ -424,17 +358,19 @@
                     </div>
                 </div>
                 
-                <!-- NEW LEGAL DOCUMENTATION CARD (Stylistically consistent) -->
-                <div class="dashboard-card md:col-span-2 cursor-pointer" onclick="openLegalModal()">
-                    <div class="w-full h-auto object-cover bg-red-800/20">
-                        <div class="p-4 flex justify-between items-center">
-                            <div>
-                                <h3 class="font-bold text-xl font-['Poppins'] text-red-400">Legal & Compliance</h3>
-                                <p class="text-sm text-gray-400 mt-1">Review our Privacy Policy and Terms of Service (18+).</p>
+                <!-- UPDATED POLICIES CARD (Changed text and linked to policies.html) -->
+                <div class="dashboard-card md:col-span-2 cursor-pointer">
+                    <a href="policies.html">
+                        <div class="w-full h-auto object-cover bg-red-800/20">
+                            <div class="p-4 flex justify-between items-center">
+                                <div>
+                                    <h3 class="font-bold text-xl font-['Poppins'] text-red-400">Neighborhood Policies</h3>
+                                    <p class="text-sm text-gray-400 mt-1">Review our Privacy Policy and Terms of Service (18+).</p>
+                                </div>
+                                <i class="fa-solid fa-scale-balanced text-red-600 text-2xl"></i>
                             </div>
-                            <i class="fa-solid fa-scale-balanced text-red-600 text-2xl"></i>
                         </div>
-                    </div>
+                    </a>
                 </div>
             </div>
         </div>
@@ -555,70 +491,7 @@
     </div>
 
     <script>
-        // --- LEGAL DOCUMENTATION CONTENT (Markdown) ---
-        const LEGAL_DOCS = {
-            policy: `
-### 🔒 Privacy Policy
-
-This policy details how your data is collected and managed by **GuysNextDoor Platforms** (including this website and associated services), ensuring transparency and security for all users. Your privacy and anonymity are paramount to us.
-
-#### 2.1 Non-Personal Data Collection and Storage
-
-Our platforms collect and store the following non-personal data for operation, security, and content management purposes:
-
-1.  **Platform Usage Data:** Standard web server log information (e.g., anonymized IP addresses, browser type, access times) is temporarily recorded for security, debugging, and traffic analysis. **We do not use tracking cookies, web beacons, or share this data with external third parties for advertising purposes.**
-2.  **Contact Form Data:** Data submitted via the Contact Us form (Name, Email, Subject, Message) is sent directly to us via Netlify's form handling service and is used solely to respond to your inquiry. This information is not stored in a public database.
-
-#### 2.2 Data Usage
-
-The collected data is used exclusively within the GuysNextDoor Platforms to:
-* Respond to user inquiries and collaboration requests.
-* Maintain the security, integrity, and functionality of all our platforms.
-
-#### 2.3 Data Retention and Removal
-
-* **Retention:** General platform logs are retained for a maximum of 30 days for security purposes. Contact form submissions are retained indefinitely unless a user specifically requests removal.
-* **Removal:** If you wish to have your submitted contact data permanently and immediately deleted, please send a written request to our contact email address.
-
-#### 2.4 Data Sharing
-
-We do not sell or share any user data (personal information, or logs) with any external third parties, including advertisers or other platforms.
-
-*Last Updated: September 26, 2025*
-            `,
-            tos: `
-### 📜 Terms of Service (ToS)
-
-This document outlines the non-negotiable standards for accessing and participating in **The GuysNextDoor Platforms** (including this website and associated cam/video services). These terms protect the content, the service, and the owners (Eric & Caleb).
-
-#### 1.1 Acceptance, Age Restriction, and Modifications
-
-* **Acceptance:** Continued access or use of any GuysNextDoor Platform constitutes your acceptance of this entire ToS.
-* **Age Restriction:** **All GuysNextDoor Platforms are strictly restricted to users who are 18 years of age or older.** By using these platforms, you warrant that you meet this minimum age requirement.
-* **Modifications:** The platform owners reserve the exclusive right to modify these terms at any time without prior notice. Continued use after modifications signifies your acceptance of the new terms.
-
-#### 1.2 Required User Conduct (Acceptable Use)
-
-The following conduct is strictly **prohibited** on all associated platforms (e.g., live streams, Discord, comments):
-
-* **Harassment and Hate Speech:** Any form of targeted harassment, bullying, discrimination, or hate speech.
-* **Illegal/Non-Consensual Content:** Sharing links or media depicting illegal acts or non-consensual content.
-* **Doxxing/Threats:** Posting private, non-public information about any user or issuing direct or implied threats of violence.
-* **Theft of Content:** Unauthorized sharing, distribution, or reproduction of copyrighted content (videos, photos, streams) owned by GuysNextDoor on any platform, public or private.
-
-#### 1.3 Content and Intellectual Property
-
-* **Copyright:** All content, including videos, photos, and stream recordings, created and distributed by GuysNextDoor is protected by copyright. By accessing our platforms, you agree not to reproduce, duplicate, copy, sell, or exploit any portion of the content without express written permission.
-
-#### 1.4 Enforcement and Liability
-
-* **Disciplinary Action:** Violations may result in warnings, temporary or permanent suspension of access to any or all GuysNextDoor Platforms.
-* **Limitation of Liability:** The platforms are provided "as is." The owners are **not liable** for any content posted by third-party users, or any damages, direct or indirect, resulting from the use or inability to use the platforms. **Your use of the service is at your sole risk.**
-
-*Last Updated: September 26, 2025*
-            `
-        };
-        let currentLegalTab = 'policy';
+        // NOTE: The LEGAL_DOCS constant and associated functions (showLegalContent, openLegalModal) have been removed as requested.
 
         // --- Core UI Functions ---
 
@@ -666,43 +539,6 @@ The following conduct is strictly **prohibited** on all associated platforms (e.
         function verifyAge() {
             localStorage.setItem('ageVerified', 'true');
             initAgeGate(); // Closes the modal and enables content
-        }
-
-        // --- Legal Modal Logic ---
-
-        function showLegalContent(tab) {
-            currentLegalTab = tab;
-            const container = document.getElementById('legal-content-container');
-            const policyTab = document.getElementById('tab-policy');
-            const tosTab = document.getElementById('tab-tos');
-
-            // Apply consistent styling based on red theme
-            const activeClasses = 'text-red-600 border-red-600';
-            const inactiveClasses = 'text-gray-400 border-transparent hover:text-red-500 hover:border-red-500/50';
-
-            // Function to safely toggle classes
-            const toggleTabClasses = (el, isActive) => {
-                el.classList.remove(...activeClasses.split(' '));
-                el.classList.remove(...inactiveClasses.split(' '));
-                el.classList.add(...(isActive ? activeClasses.split(' ') : inactiveClasses.split(' ')));
-            };
-
-            toggleTabClasses(policyTab, tab === 'policy');
-            toggleTabClasses(tosTab, tab === 'tos');
-
-            // Render Markdown content
-            container.innerHTML = marked.parse(LEGAL_DOCS[tab]);
-            container.scrollTop = 0; // Scroll to top on tab change
-        }
-
-        function openLegalModal() {
-            showModal('legal-modal');
-            // Ensure content is rendered on open
-            if (!document.getElementById('legal-content-container').innerHTML.trim()) {
-                showLegalContent('policy'); 
-            } else {
-                showLegalContent(currentLegalTab);
-            }
         }
 
         // --- FAQ Accordion/Collapsible Functions ---
@@ -778,8 +614,7 @@ The following conduct is strictly **prohibited** on all associated platforms (e.
             // Initialize Age Verification
             initAgeGate();
             
-            // Set initial tab styling for Legal modal
-            showLegalContent('policy');
+            // The legal modal initialization code has been removed.
         };
     </script>
 </body>
